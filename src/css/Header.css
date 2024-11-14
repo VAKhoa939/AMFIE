@@ -1,0 +1,93 @@
+header {
+  height: 150px;
+  background-color: white;
+  z-index: 100;
+}
+
+.nav-section {
+  background-color: rgb(11, 8, 158);
+  height: 40px;
+  padding-right: 50px;
+  list-style-type: none;
+
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-btn {
+  cursor: pointer;
+}
+
+.login-btn {
+  text-decoration: none;
+  text-align: center;
+}
+
+.home-btn, .login-btn, .dropdown-btn {
+  display: block;
+  padding: 9px 16px;
+  width: 160px;
+  overflow: hidden;
+}
+
+.home-btn p, .login-btn p, .dropdown-btn p {
+  font-size: 16px;
+  color: white;
+}
+
+.dropdown-btn {
+  display: flex;
+  gap: 10px;
+}
+
+.dropdown-btn img {
+  height: 20px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  margin: 0;
+  list-style-type: none;
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 20;
+}
+
+.dropdown-menu a {
+  color: black;
+  padding: 9px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f1f1f1
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.login-btn:hover, .dropdown:hover .dropdown-btn {
+  opacity: 0.7;
+}
+
+.logo-section {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  padding-left: 10px;
+}
+
+.ute-img {
+  height: 80px;
+}
