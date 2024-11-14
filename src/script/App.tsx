@@ -6,6 +6,7 @@ import LoginPage from "./auth-pages/LoginPage";
 import RegisterPage from "./auth-pages/RegisterPage";
 import DashboardPage from "./dashboard-page/DashboardPage";
 import { AuthProvider } from "./context/AuthContext";
+import HomePage from "./home-page/HomePage";
 
 function App() {
   const mainRef = useRef<HTMLElement>(null);
@@ -28,6 +29,10 @@ function App() {
             <Route
               path="/dashboard"
               element={<DashboardPage mainRef={mainRef} />}
+            />
+            <Route
+              path="/homepage"
+              element={<HomePage mainRef={mainRef} />}
             />
             <Route path="/chat" element={<ChatPage mainRef={mainRef} />} />
           </Routes>
