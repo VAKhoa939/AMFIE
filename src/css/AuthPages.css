@@ -63,9 +63,6 @@
   gap: 10px;
 }
 
-.auth-form .input-area p {
-}
-
 .auth-form .input-area input {
   font-size: 20px;
   width: 100%;
@@ -85,6 +82,7 @@
   border-radius: 5px;
   font-size: 25px;
   padding: 5px 10px 10px 10px;
+  cursor: pointer;
 }
 
 .submit-btn:hover, .register-btn:hover {

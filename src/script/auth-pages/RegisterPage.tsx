@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { defaultUser, IUser } from "../interfaces/User";
 import uteLogo from "../../assets/general/ute-logo.png";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 interface Props {
   mainRef: React.RefObject<HTMLElement>;
@@ -11,6 +12,8 @@ const RegisterPage = (props: Props) => {
   const { mainRef } = props;
   const [user, setUser] = useState<IUser>(defaultUser);
   const [cPassword, setCPassword] = useState<string>("");
+  const { setIsLoggedIn } = useAuth();
+  const navigate = useNavigate();
 
   function onChangeInput(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.name === "confirm-password") {
@@ -21,6 +24,11 @@ const RegisterPage = (props: Props) => {
       ...prevUser,
       [event.target.name]: event.target.value,
     }));
+  }
+
+  function handleLogin() {
+    setIsLoggedIn(true);
+    navigate("/dashboard");
   }
 
   return (
@@ -73,11 +81,11 @@ const RegisterPage = (props: Props) => {
             </div>
           </div>
           {/*
-            <input className='submit-btn' type='submit' value='Register'/>
+            <input className='submit-btn' type='submit' onClick={handleLogin} value='Register'/>
               */}
-          <Link to="/dashboard">
-            <div className="submit-btn">Register</div>
-          </Link>
+          <div className="submit-btn" onClick={handleLogin}>
+            Register
+          </div>
         </form>
       </div>
     </main>

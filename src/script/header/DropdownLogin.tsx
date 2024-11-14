@@ -1,9 +1,10 @@
-import { useState } from "react";
 import "../../css/Header.css";
 import userIcon from "../../assets/general/user-icon.png";
+import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const DropdownLogin = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
 
   return (
     <>
@@ -18,16 +19,20 @@ const DropdownLogin = () => {
               <a href="#">Profile</a>
             </li>
             <li>
-              <a href="/login" onClick={() => setIsLoggedIn(false)}>
-                Logout
-              </a>
+              <Link
+                to="/login"
+                className="logout-btn"
+                onClick={() => setIsLoggedIn(false)}
+              >
+                <p>Logout</p>
+              </Link>
             </li>
           </ul>
         </div>
       ) : (
-        <a className="login-btn" href="/login">
+        <Link to="/login" className="login-btn">
           <p>Login</p>
-        </a>
+        </Link>
       )}
     </>
   );

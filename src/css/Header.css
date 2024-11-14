@@ -28,7 +28,7 @@ header {
 .home-btn, .login-btn, .dropdown-btn {
   display: block;
   padding: 9px 16px;
-  width: 160px;
+  min-width: 160px;
   overflow: hidden;
 }
 
