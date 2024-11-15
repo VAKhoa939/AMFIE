@@ -1,0 +1,27 @@
+.go-to-dashboard-btn{
+    background-color: blue;
+    color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    font-size: 25px;
+    padding: 8px 30px;
+    margin: 30px 0;
+    padding: 5px 10px 10px 10px;
+}
+
+.go-to-dashboard-btn:hover {
+    opacity: 0.7;
+}
+  
+.go-to-dashboard-btn:active {
+    opacity: 0.4;
+}
+
+.bill-board-background{
+    flex-basis: 50%;
+    min-width: 300px;
+}
+.bg-image {
+    max-width: 100%;
+    padding: 54px 0;
+}
