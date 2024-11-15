@@ -1,0 +1,45 @@
+.title{
+    text-align: center;
+    font-size: 50px;
+    font-family:sans-serif;
+    color:whitesmoke;
+    display: inline;
+}
+.service-list {
+    max-width: 1600px;
+    margin: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+    background-color:blue;
+}
+
+.row {
+    display: flex;
+    align-items: left;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.service-container {
+    flex-basis: 25%;
+    padding: 10px;
+    min-width: 200px;
+    min-height: 150px;
+    margin-bottom: 50px;
+    transition: transform 0.5s;
+}
+
+.service-avatar{
+    width: 300px; 
+    height: auto;
+    
+}
+
+.service-container p {
+    text-align: center;
+    font-size: 130%;
+    font-family:Arial, Helvetica, sans-serif;
+    color:whitesmoke;
+}
+.service-container:hover {
+    transform: translateY(-5px);
+}
