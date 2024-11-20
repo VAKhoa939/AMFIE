@@ -1,9 +1,21 @@
-body, main, header, div, p, textarea, button, img, input, ul, li {
+body,
+main,
+header,
+div,
+p,
+textarea,
+button,
+img,
+input,
+ul,
+li,
+h1,
+nav {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
-  font-family: 'Segoe UI';
+  font-family: "Segoe UI";
 }
 
 a {

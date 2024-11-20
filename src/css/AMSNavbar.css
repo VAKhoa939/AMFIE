@@ -1,0 +1,8 @@
+.ams-body {
+  display: flex;
+}
+
+.ams-navbar {
+  width: 300px;
+  height: 100vh;
+}

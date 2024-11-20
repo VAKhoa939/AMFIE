@@ -1,5 +1,5 @@
-import aiAvatar from "../../assets/chat-page/ai-avatar.png";
-import Message from "../interfaces/Message";
+import aiAvatar from "../../../assets/chat-page/ai-avatar.png";
+import Message from "../../interfaces/Message";
 
 interface Props {
   messageList: Message[];

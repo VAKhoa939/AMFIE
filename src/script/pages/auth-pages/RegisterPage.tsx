@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import { defaultUser, IUser } from "../interfaces/User";
-import uteLogo from "../../assets/general/ute-logo.png";
+import { defaultUser, IUser } from "../../interfaces/User";
+import uteLogo from "../../../assets/general/ute-logo.png";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
+import "../../../css/AuthPages.css";
+import { useMainRef, useScrollToMain } from "../../context/MainRefContext";
 
-interface Props {
-  mainRef: React.RefObject<HTMLElement>;
-}
-
-const RegisterPage = (props: Props) => {
-  const { mainRef } = props;
+const RegisterPage = () => {
+  const mainRef = useMainRef();
   const [user, setUser] = useState<IUser>(defaultUser);
   const [cPassword, setCPassword] = useState<string>("");
   const { setIsLoggedIn } = useAuth();
   const navigate = useNavigate();
+
+  useScrollToMain();
 
   function onChangeInput(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.name === "confirm-password") {

@@ -1,6 +1,7 @@
-import "../../css/Header.css";
-import userIcon from "../../assets/general/user-icon.png";
-import { useAuth } from "../context/AuthContext";
+import "../../../../css/Header.css";
+import userIcon from "../../../../assets/general/user-icon.png";
+//import logoutIcon from "../../../../assets/header/logout-icon.png";
+import { useAuth } from "../../../context/AuthContext";
 import { Link } from "react-router-dom";
 
 const DropdownLogin = () => {
@@ -12,11 +13,11 @@ const DropdownLogin = () => {
         <div className="dropdown">
           <div className="dropdown-btn">
             <img src={userIcon} />
-            <p>Username</p>
+            <p>Email</p>
           </div>
           <ul className="dropdown-menu">
             <li>
-              <a href="#">Profile</a>
+              <a href="#">Trang cá nhân</a>
             </li>
             <li>
               <Link
@@ -24,7 +25,7 @@ const DropdownLogin = () => {
                 className="logout-btn"
                 onClick={() => setIsLoggedIn(false)}
               >
-                <p>Logout</p>
+                <p>Đăng xuất</p>
               </Link>
             </li>
           </ul>

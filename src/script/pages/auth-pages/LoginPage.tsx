@@ -1,19 +1,18 @@
-import "../../css/AuthPages.css";
-import emailIcon from "../../assets/auth-pages/email-icon.png";
-import passwordIcon from "../../assets/auth-pages/password-icon.png";
-import schoolPicture from "../../assets/auth-pages/school-picture.png";
-import uteLogo from "../../assets/general/ute-logo.png";
+import "../../../css/AuthPages.css";
+import emailIcon from "../../../assets/auth-pages/email-icon.png";
+import passwordIcon from "../../../assets/auth-pages/password-icon.png";
+import schoolPicture from "../../../assets/auth-pages/school-picture.png";
+import uteLogo from "../../../assets/general/ute-logo.png";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
+import { useMainRef, useScrollToMain } from "../../context/MainRefContext";
 
-interface Props {
-  mainRef: React.RefObject<HTMLElement>;
-}
-
-const LoginPage = (props: Props) => {
-  const { mainRef } = props;
+const LoginPage = () => {
+  const mainRef = useMainRef();
   const { setIsLoggedIn } = useAuth();
   const navigate = useNavigate();
+
+  useScrollToMain();
 
   function handleLogin() {
     setIsLoggedIn(true);

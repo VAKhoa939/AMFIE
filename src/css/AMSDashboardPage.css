@@ -1,0 +1,21 @@
+.ams-dashboard-page {
+  width: calc(100vw - 300px);
+  height: calc(100vh);
+  background-color: rgb(15, 17, 24);
+  color: rgb(231, 232, 236);
+  font-family: sans-serif;
+}
+
+.ams-dashboard-page .title {
+  text-align: center;
+  font-size: 50px;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.ams-dashboard-page .ams-table-buttons {
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
+  margin: 20px;
+}

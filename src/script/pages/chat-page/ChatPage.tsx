@@ -1,17 +1,16 @@
 import { useState } from "react";
-import "../../css/ChatPage.css";
+import "../../../css/ChatPage.css";
 import ChatBox from "./ChatBox";
 import ChatInput from "./ChatInput";
-import Message, { isMessageList } from "../interfaces/Message";
+import Message, { isMessageList } from "../../interfaces/Message";
+import { useMainRef, useScrollToMain } from "../../context/MainRefContext";
 
-interface Props {
-  mainRef: React.RefObject<HTMLElement>;
-}
-
-const ChatPage = (props: Props) => {
-  const { mainRef } = props;
+const ChatPage = () => {
+  const mainRef = useMainRef();
   const [messageText, setMessageText] = useState<string>("");
   const [messageList, setMessageList] = useState<Message[]>([]);
+
+  useScrollToMain();
 
   const HANDLE_MESSAGE_URL = import.meta.env.VITE_API_URL + "/message";
   const SECOND = 1000;

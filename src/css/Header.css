@@ -16,29 +16,26 @@ header {
   gap: 10px;
 }
 
-.nav-btn {
-  cursor: pointer;
-}
-
 .login-btn {
   text-decoration: none;
   text-align: center;
 }
 
-.home-btn, .login-btn, .dropdown-btn {
+.nav-btn, .login-btn, .dropdown-btn {
+  cursor: pointer;
   display: block;
   padding: 9px 16px;
-  min-width: 160px;
   overflow: hidden;
 }
 
-.home-btn p, .login-btn p, .dropdown-btn p {
+.nav-btn p, .login-btn p, .dropdown-btn p {
   font-size: 16px;
   color: white;
 }
 
 .dropdown-btn {
   display: flex;
+  min-width: 160px;
   gap: 10px;
 }
 
