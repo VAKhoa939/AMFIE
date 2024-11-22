@@ -1,6 +1,6 @@
 import AssetTable from "./AssetTable";
 import "../../../../css/AMSDashboardPage.css";
-import { Asset, getAssetList } from "../../../interfaces/Asset";
+import { getAssetList } from "../../../interfaces/Asset";
 import { useQuery } from "@tanstack/react-query";
 import { useMainRef, useScrollToMain } from "../../../context/MainRefContext";
 import { useCheckLoggedIn } from "../../../context/AuthContext";
@@ -8,18 +8,12 @@ import { Link } from "react-router-dom";
 
 const AMSDashboardPage = () => {
   const mainRef = useMainRef();
-  let assetListLength = 0;
 
   useCheckLoggedIn();
   useScrollToMain();
 
   const { data: assetList, isLoading } = useQuery({
-    queryFn: async () => {
-      const newAssetList = (await getAssetList()) as Asset[];
-      assetListLength = newAssetList.length + 1;
-      console.log(assetListLength);
-      return newAssetList;
-    },
+    queryFn: async () => getAssetList(),
     queryKey: ["assetList"],
   });
 
