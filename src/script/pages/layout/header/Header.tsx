@@ -2,12 +2,15 @@
 import "../../../../css/Header.css";
 import ute from "../../../../assets/header/ute.png";
 import DropdownLogin from "./DropdownLogin";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Header() {
+  const location = useLocation();
+  const showUTEFullLogo =
+    location.pathname === "/" || location.pathname === "/login";
   return (
     <header>
-      <ul className="nav-section">
+      <ul className="header-section">
         <li className="nav-btn">
           <Link to="/">
             <p>Trang chủ</p>
@@ -22,11 +25,13 @@ function Header() {
           <DropdownLogin />
         </li>
       </ul>
-      <div className="logo-section">
-        <a href="/">
-          <img className="ute-img" src={ute} />
-        </a>
-      </div>
+      {showUTEFullLogo && (
+        <div className="logo-section">
+          <a href="/">
+            <img className="ute-img" src={ute} />
+          </a>
+        </div>
+      )}
     </header>
   );
 }

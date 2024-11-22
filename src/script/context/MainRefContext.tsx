@@ -33,7 +33,7 @@ export function useMainRef(): MainRefContextType {
   return context;
 }
 
-export function useScrollToMain(): void {
+export function useScrollToMain() {
   const mainRef = useMainRef();
 
   useEffect(() => {

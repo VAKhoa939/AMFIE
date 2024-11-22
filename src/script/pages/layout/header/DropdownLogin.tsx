@@ -32,7 +32,7 @@ const DropdownLogin = () => {
         </div>
       ) : (
         <Link to="/login" className="login-btn">
-          <p>Login</p>
+          <p>Đăng nhập</p>
         </Link>
       )}
     </>

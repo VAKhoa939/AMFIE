@@ -7,15 +7,18 @@ interface Props {
 
 const AMSNavbar = (props: Props) => {
   const location = useLocation();
-  const showNavbar = location.pathname === "/ams-dashboard";
-  if (showNavbar)
-    return (
-      <div className="ams-body">
-        <nav className="ams-navbar">AMSNavbar</nav>
-        {props.children}
-      </div>
-    );
-  return props.children;
+  const showNavbar =
+    location.pathname === "ams-dashboard" ||
+    location.pathname === "create-asset" ||
+    location.pathname === ":assetId";
+  return showNavbar ? (
+    <div className="ams-body">
+      <nav className="ams-navbar">AMSNavbar</nav>
+      {props.children}
+    </div>
+  ) : (
+    <>{props.children}</>
+  );
 };
 
 export default AMSNavbar;
