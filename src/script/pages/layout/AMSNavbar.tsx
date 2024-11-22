@@ -8,9 +8,9 @@ interface Props {
 const AMSNavbar = (props: Props) => {
   const location = useLocation();
   const showNavbar =
-    location.pathname === "ams-dashboard" ||
-    location.pathname === "create-asset" ||
-    location.pathname === ":assetId";
+    location.pathname === "/dashboard" ||
+    location.pathname === "/dashboard/create-asset" ||
+    location.pathname === "/dashboard/:assetId";
   return showNavbar ? (
     <div className="ams-body">
       <nav className="ams-navbar">AMSNavbar</nav>

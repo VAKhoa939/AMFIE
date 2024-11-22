@@ -10,6 +10,9 @@ import {
 } from "../../interfaces/Asset";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import "../../../css/AMSAsset.css";
+import { useMainRef, useScrollToMain } from "../../context/MainRefContext";
+import { useCheckLoggedIn } from "../../context/AuthContext";
 
 const AssetInfo = () => {
   const [formData, setFormData] = useState<Asset>(defaultAsset);
@@ -21,6 +24,9 @@ const AssetInfo = () => {
     location.pathname !== "/dashboard/create-asset" ? "info" : "create"
   );
   const handleUpdate = useHandleUpdate();
+  const mainRef = useMainRef();
+  //useCheckLoggedIn();
+  useScrollToMain();
   const isInfoMode = mode === "info";
 
   const { data: asset, isLoading } = useQuery(["asset"], {
@@ -41,7 +47,7 @@ const AssetInfo = () => {
   function renderInfo() {
     return (
       <>
-        <div>
+        <div className="content">
           {Object.entries(formData).map(([key, value], id) => (
             <div key={key}>
               <p>{columnHeaderList[id]}:</p>
@@ -57,7 +63,7 @@ const AssetInfo = () => {
 
   function renderForm() {
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="content">
         {Object.entries(formData).map(([key, value], id) => (
           <div key={key}>
             <p>{columnHeaderList[id]}:</p>
@@ -69,7 +75,7 @@ const AssetInfo = () => {
                 name={key}
                 value={value}
                 onChange={handleChange}
-                readOnly={key === "asset_id"}
+                readOnly={key === "asset_id" && mode === "update"}
               />
             )}
           </div>
@@ -111,16 +117,20 @@ const AssetInfo = () => {
   }
 
   return (
-    <div className="asset-info-background">
-      <div>
+    <main ref={mainRef} className="asset-info-background">
+      <div className="container">
         <Link to={"/dashboard"}>Trở về</Link>
         {loading ? (
           <>Loading...</>
         ) : (
-          <>{mode === "update" ? renderForm() : renderInfo()}</>
+          <div className="content">
+            {mode === "update" || mode === "create"
+              ? renderForm()
+              : renderInfo()}
+          </div>
         )}
       </div>
-    </div>
+    </main>
   );
 };
 
