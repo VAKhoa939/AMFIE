@@ -1,4 +1,4 @@
-import AMSNavbar from "./AMSNavbar";
+import Navbar from "./Navbar";
 import Header from "./header/Header";
 import "../../../css/general.css";
 
@@ -10,7 +10,7 @@ const Layout = (props: Props) => {
   return (
     <>
       <Header />
-      <AMSNavbar children={props.children} />
+      <Navbar children={props.children} />
     </>
   );
 };

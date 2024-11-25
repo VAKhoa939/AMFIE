@@ -1,4 +1,5 @@
 export interface Asset {
+  id: string;
   asset_id: string;
   name: string;
   specifications: string;
@@ -16,7 +17,6 @@ export interface Asset {
 }
 
 export interface AssetResponse extends Asset {
-  _id: string;
   __v: string;
 }
 
@@ -26,7 +26,7 @@ export async function getAssetList() {
   const res = await fetch(`${HANDLE_ASSET_URL}`);
   const data: AssetResponse[] = await res.json();
   // Filter out the _id field from each asset
-  const filteredData = data.map(({ _id, __v, ...rest }) => rest);
+  const filteredData = data.map(({ __v, ...rest }) => rest);
   return [...filteredData];
 }
 
@@ -34,7 +34,7 @@ export async function getAssetById(assetId: string) {
   const res = await fetch(`${HANDLE_ASSET_URL}/${assetId}`);
   const data = await res.json();
   const resAsset = data.map(
-    ({ _id, __v, ...rest }: { _id: string; __v: string; rest: Asset }) => rest
+    ({ __v, ...rest }: { _id: string; __v: string; rest: Asset }) => rest
   );
   return resAsset[0];
 }
@@ -50,7 +50,7 @@ export async function createAsset(asset: Asset) {
   const res = await fetch(`${HANDLE_ASSET_URL}`, requestInit);
   const data = await res.json();
   const resAsset = data.map(
-    ({ _id, __v, ...rest }: { _id: string; __v: string; rest: Asset }) => rest
+    ({ __v, ...rest }: { _id: string; __v: string; rest: Asset }) => rest
   );
   return resAsset[0];
 }
@@ -66,7 +66,7 @@ export async function updateAsset(asset: Asset) {
   const res = await fetch(`${HANDLE_ASSET_URL}/${asset.asset_id}`, requestInit);
   const data = await res.json();
   const resAsset = data.map(
-    ({ _id, __v, ...rest }: { _id: string; __v: string; rest: Asset }) => rest
+    ({ __v, ...rest }: { _id: string; __v: string; rest: Asset }) => rest
   );
   return resAsset[0];
 }
@@ -81,12 +81,13 @@ export async function deleteAsset(asset_id: string) {
   const res = await fetch(`${HANDLE_ASSET_URL}/${asset_id}`, requestInit);
   const data = await res.json();
   const resAsset = data.map(
-    ({ _id, __v, ...rest }: { _id: string; __v: string; rest: Asset }) => rest
+    ({ __v, ...rest }: { _id: string; __v: string; rest: Asset }) => rest
   );
   return resAsset[0];
 }
 
 export const columnHeaderList: string[] = [
+  "Mã tài sản",
   "Số hiệu tài sản",
   "Tên tài sản",
   "Quy cách, đặc điểm tài sản",
@@ -104,6 +105,7 @@ export const columnHeaderList: string[] = [
 ];
 
 export const defaultAsset: Asset = {
+  id: "",
   asset_id: "",
   name: "",
   specifications: "",

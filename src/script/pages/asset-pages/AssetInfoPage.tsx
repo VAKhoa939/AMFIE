@@ -2,37 +2,26 @@ import { useEffect, useState } from "react";
 import {
   Asset,
   columnHeaderList,
-  createAsset,
   defaultAsset,
   deleteAsset,
   getAssetById,
   updateAsset,
 } from "../../interfaces/Asset";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import "../../../css/AMSAsset.css";
+import { useQuery } from "@tanstack/react-query";
+import "../../../css/AssetInfoPage.css";
 import { useMainRef, useScrollToMain } from "../../context/MainRefContext";
-import { useCheckLoggedIn } from "../../context/AuthContext";
 
-const AssetInfo = () => {
+const AssetInfoPage = () => {
   const [formData, setFormData] = useState<Asset>(defaultAsset);
-  const [assetId, setAssetId] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [mode, setMode] = useState<string>("info");
   const location = useLocation();
-  const navigate = useNavigate();
-  const [mode, setMode] = useState<string>(
-    location.pathname !== "/dashboard/create-asset" ? "info" : "create"
-  );
-  const handleUpdate = useHandleUpdate();
-  const mainRef = useMainRef();
-  //useCheckLoggedIn();
-  useScrollToMain();
   const isInfoMode = mode === "info";
+  const id = location.pathname.split("/").pop() as string;
 
   const { data: asset, isLoading } = useQuery(["asset"], {
     queryFn: async () => {
-      setAssetId(location.pathname.split("/").pop() as string);
-      return getAssetById(assetId);
+      return getAssetById(id);
     },
     enabled: isInfoMode,
   });
@@ -41,8 +30,35 @@ const AssetInfo = () => {
     if (!isInfoMode || !asset) return;
     console.log(asset);
     setFormData(asset);
-    setLoading(isLoading);
-  }, [isInfoMode, asset, isLoading, formData]);
+  }, [isInfoMode, asset, formData]);
+
+  const navigate = useNavigate();
+  const mainRef = useMainRef();
+  useScrollToMain();
+
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    const { name } = e.target;
+    const value =
+      typeof e.target.value === "number"
+        ? Number(e.target.value)
+        : e.target.value;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  }
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (mode === "delete") {
+      deleteAsset(id);
+      navigate("/dashboard");
+      return;
+    }
+    if (mode === "update") {
+      updateAsset(formData);
+      setMode("info");
+    }
+  }
 
   function renderInfo() {
     return (
@@ -75,52 +91,25 @@ const AssetInfo = () => {
                 name={key}
                 value={value}
                 onChange={handleChange}
-                readOnly={key === "asset_id" && mode === "update"}
+                readOnly={key === "asset_id"}
               />
             )}
           </div>
         ))}
 
         <div>
-          <input type="submit" value={mode === "update" ? "Lưu" : "Tạo"} />
-          {mode === "update" && (
-            <button onClick={() => setMode("info")}>Trở về</button>
-          )}
+          <input type="submit" value="Lưu" />
+          <button onClick={() => setMode("info")}>Trở về</button>
         </div>
       </form>
     );
-  }
-
-  function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    const { name } = e.target;
-    const value =
-      typeof e.target.value === "number"
-        ? Number(e.target.value)
-        : e.target.value;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-  }
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (mode === "delete") {
-      deleteAsset(assetId);
-      navigate("/dashboard");
-      return;
-    }
-    if (mode === "update") {
-      handleUpdate.mutate(formData);
-      setMode("info");
-    }
-    console.log(createAsset(formData));
   }
 
   return (
     <main ref={mainRef} className="asset-info-background">
       <div className="container">
         <Link to={"/dashboard"}>Trở về</Link>
-        {loading ? (
+        {isLoading ? (
           <>Loading...</>
         ) : (
           <div className="content">
@@ -134,13 +123,4 @@ const AssetInfo = () => {
   );
 };
 
-function useHandleUpdate() {
-  const queryClient = useQueryClient();
-  return useMutation(updateAsset, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["asset"]);
-    },
-  });
-}
-
-export default AssetInfo;
+export default AssetInfoPage;

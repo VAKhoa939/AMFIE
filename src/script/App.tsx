@@ -5,10 +5,11 @@ import LoginPage from "./pages/auth-pages/LoginPage";
 import RegisterPage from "./pages/auth-pages/RegisterPage";
 import { AuthProvider } from "./context/AuthContext";
 import HomePage from "./pages/home-page/HomePage";
-import AMSDashboardPage from "./pages/ams-pages/ams-dashboard-page/AMSDashboardPage";
+import AssetDashboardPage from "./pages/asset-pages/AssetDashboardPage";
 import { MainRefProvider } from "./context/MainRefContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import AssetInfo from "./pages/ams-pages/AssetInfo";
+import AssetInfoPage from "./pages/asset-pages/AssetInfoPage";
+import CreateAssetPage from "./pages/asset-pages/CreateAssetPage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -23,9 +24,12 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
-                <Route path="/dashboard" element={<AMSDashboardPage />} />
-                <Route path="/dashboard/:assetId" element={<AssetInfo />} />
-                <Route path="/dashboard/create-asset" element={<AssetInfo />} />
+                <Route path="/dashboard" element={<AssetDashboardPage />} />
+                <Route path="/dashboard/:id" element={<AssetInfoPage />} />
+                <Route
+                  path="/dashboard/create-asset"
+                  element={<CreateAssetPage />}
+                />
                 <Route path="/chat" element={<ChatPage />} />
               </Routes>
             </Layout>

@@ -1,11 +1,11 @@
 import AssetTable from "./AssetTable";
-import "../../../../css/AMSDashboardPage.css";
-import { getAssetList } from "../../../interfaces/Asset";
+import "../../../css/AssetDashboardPage.css";
+import { getAssetList } from "../../interfaces/Asset";
 import { useQuery } from "@tanstack/react-query";
-import { useMainRef, useScrollToMain } from "../../../context/MainRefContext";
-import { useCheckLoggedIn } from "../../../context/AuthContext";
+import { useMainRef, useScrollToMain } from "../../context/MainRefContext";
+import { useCheckLoggedIn } from "../../context/AuthContext";
 
-const AMSDashboardPage = () => {
+const AssetDashboardPage = () => {
   const mainRef = useMainRef();
   useCheckLoggedIn();
   useScrollToMain();
@@ -27,4 +27,4 @@ const AMSDashboardPage = () => {
   );
 };
 
-export default AMSDashboardPage;
+export default AssetDashboardPage;

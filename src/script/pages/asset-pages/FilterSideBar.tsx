@@ -4,6 +4,7 @@ import { useState } from "react";
 import "../../../css/FilterSidebar.css";
 
 interface FilterSidebarProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   table: Table<any>;
 }
 

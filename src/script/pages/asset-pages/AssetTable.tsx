@@ -1,4 +1,5 @@
-import { Asset } from "../../../interfaces/Asset";
+import "../../../css/AssetDashboardPage.css";
+import { Asset } from "../../interfaces/Asset";
 import {
   useReactTable,
   getCoreRowModel,
@@ -10,7 +11,7 @@ import {
 } from "@tanstack/react-table";
 import { useState } from "react";
 import { FaSort, FaSortDown, FaSortUp, FaPlus } from "react-icons/fa";
-import { FilterSidebar } from "../FilterSideBar";
+import { FilterSidebar } from "./FilterSideBar";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -19,19 +20,12 @@ interface Props {
 
 // Example of full usage
 export default function AssetTable({ assetList }: Props) {
-  /**
-   {
-  "id": 1,
-  "first_name": "Isador",
-  "last_name": "Kruger",
-  "email": "ikruger0@huffingtonpost.com",
-  "gender": "Male",
-  "dob": "2023-04-28T11:19:35Z"
-  }
-   */
-
-  /*@type import('@tanstack/react-table').ColumnDef<typeof mData[0]>[]*/
   const columns = [
+    {
+      header: "Mã tài sản",
+      accessorKey: "_id",
+      footer: "Mã tài sản",
+    },
     {
       header: "Số hiệu tài sản",
       accessorKey: "asset_id",

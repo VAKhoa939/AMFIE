@@ -1,11 +1,11 @@
-import "../../../css/AMSNavbar.css";
+import "../../../css/Navbar.css";
 import { useLocation } from "react-router-dom";
 
 interface Props {
   children: JSX.Element;
 }
 
-const AMSNavbar = (props: Props) => {
+const Navbar = (props: Props) => {
   const location = useLocation();
   const showNavbar =
     location.pathname === "/dashboard" ||
@@ -21,4 +21,4 @@ const AMSNavbar = (props: Props) => {
   );
 };
 
-export default AMSNavbar;
+export default Navbar;
