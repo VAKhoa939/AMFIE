@@ -16,7 +16,7 @@ const LoginPage = () => {
 
   function handleLogin() {
     setIsLoggedIn(true);
-    navigate("/dashboard");
+    navigate("/asset-dashboard");
   }
 
   return (

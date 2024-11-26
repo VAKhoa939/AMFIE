@@ -1,5 +1,4 @@
-import "../../../css/AssetDashboardPage.css";
-import { Asset } from "../../interfaces/Asset";
+import "../../css/DashboardPage.css";
 import {
   useReactTable,
   getCoreRowModel,
@@ -14,96 +13,26 @@ import { FaSort, FaSortDown, FaSortUp, FaPlus } from "react-icons/fa";
 import { FilterSidebar } from "./FilterSideBar";
 import { Link } from "react-router-dom";
 
-interface Props {
-  assetList: Asset[];
+interface Columns {
+  header: string;
+  accessorKey: string;
+  footer: string;
 }
 
-// Example of full usage
-export default function AssetTable({ assetList }: Props) {
-  const columns = [
-    {
-      header: "Mã tài sản",
-      accessorKey: "_id",
-      footer: "Mã tài sản",
-    },
-    {
-      header: "Số hiệu tài sản",
-      accessorKey: "asset_id",
-      footer: "Số hiệu tài sản",
-    },
-    {
-      header: "Tên tài sản",
-      accessorKey: "name",
-      footer: "Tên tài sản",
-    },
-    {
-      header: "Quy cách, đặc điểm tài sản",
-      accessorKey: "specifications",
-      footer: "Quy cách, đặc điểm tài sản",
-    },
-    {
-      header: "Năm sử dụng",
-      accessorKey: "year_of_use",
-      footer: "Năm sử dụng",
-    },
-    {
-      header: "Số lượng",
-      accessorKey: "quantity",
-      footer: "Số Lượng",
-    },
-    {
-      header: "Đơn Giá",
-      accessorKey: "unit_price",
-      footer: "Đơn Giá",
-    },
-    {
-      header: "Nguyên giá",
-      accessorKey: "origin_price",
-      footer: "Nguyên giá",
-    },
-    {
-      header: "Số lượng thực tế",
-      accessorKey: "real_count",
-      footer: "Nguyên giá",
-    },
-    {
-      header: "Phầm trăm hao mòn",
-      accessorKey: "depreciation_rate",
-      footer: "Phầm trăm hao mòn",
-    },
-    {
-      header: "Nguyên giá còn lại",
-      accessorKey: "remaining_value",
-      footer: "Nguyên giá còn lại",
-    },
-    {
-      header: "Địa điểm",
-      accessorKey: "location",
-      footer: "Địa điểm",
-    },
-    {
-      header: "ID người phụ trách",
-      accessorKey: "responsible_user",
-      footer: "ID người phụ trách",
-    },
-    {
-      header: "Đề nghị thanh lý",
-      accessorKey: "suggested_disposal",
-      footer: "Đề nghị thanh lý",
-    },
-    {
-      header: "Ghi chú",
-      accessorKey: "note",
-      footer: "Ghi chú",
-    },
-  ];
+interface Props {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any[];
+  columns: Columns[];
+  createLink: string;
+}
 
+const Table = ({ data, columns, createLink: dashboardLink }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filtering, setFiltering] = useState("");
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
 
   const table = useReactTable({
-    data: assetList,
+    data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -118,32 +47,22 @@ export default function AssetTable({ assetList }: Props) {
     onSortingChange: setSorting,
     onGlobalFilterChange: setFiltering,
   });
-  const searchBar = ()=>{
-    return(
-      <input
+  return (
+    <div className="relative">
+      <FilterSidebar table={table} />
+      <div className="w3-container">
+        <div className="ams-table-buttons">
+          <input
             type="text"
             value={filtering}
             onChange={(e) => setFiltering(e.target.value)}
             placeholder="Search all columns..."
             className=""
           />
-    )
-  }
-  const create = ()=>{
-    return(
-      <Link to={"/dashboard/create-asset"} className="create-btn">
+          <Link to={dashboardLink} className="create-btn">
             <FaPlus className="icon" />
-            <label>Tạo tài sản mới</label>
+            <label>Tạo mới</label>
           </Link>
-    )
-  }
-  return (
-    <div className="relative">
-      <FilterSidebar table={table} />
-      <div className="w3-container">
-        <div className="ams-table-buttons">
-          {searchBar()}
-          {create()}
         </div>
         <table className="w3-table-all">
           <thead>
@@ -242,6 +161,8 @@ export default function AssetTable({ assetList }: Props) {
           </span>
         </div>
       </div>
-      </div>
+    </div>
   );
-}
+};
+
+export default Table;

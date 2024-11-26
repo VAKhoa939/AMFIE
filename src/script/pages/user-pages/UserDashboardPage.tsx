@@ -1,6 +1,6 @@
-import UserTable from "./UserTable";
+import Table from "../../components/Table";
 import "../../../css/AssetDashboardPage.css";
-import { getAssetList } from "../../interfaces/Asset";
+import { columns, getAssetList } from "../../interfaces/Asset";
 import { useQuery } from "@tanstack/react-query";
 import { useMainRef, useScrollToMain } from "../../context/MainRefContext";
 import { useCheckLoggedIn } from "../../context/AuthContext";
@@ -10,18 +10,18 @@ const UserDashboardPage = () => {
   useCheckLoggedIn();
   useScrollToMain();
 
-  const { data: assetList, isLoading } = useQuery({
+  const { data: userList, isLoading } = useQuery({
     queryFn: () => getAssetList(),
-    queryKey: ["assetList"],
+    queryKey: ["userList"],
   });
 
   return (
-    <main className="ams-dashboard-page" ref={mainRef}>
+    <main className="dashboard-page" ref={mainRef}>
       <div className="title">Danh Sách Tài Sản</div>
-      {isLoading || typeof assetList === "undefined" ? (
+      {isLoading || typeof userList === "undefined" ? (
         <>Loading...</>
       ) : (
-        <UserTable assetList={assetList} />
+        <Table data={userList} columns={columns} createLink="/user-dashboard" />
       )}
     </main>
   );

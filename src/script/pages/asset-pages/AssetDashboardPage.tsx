@@ -1,9 +1,9 @@
-import AssetTable from "./AssetTable";
-import "../../../css/AssetDashboardPage.css";
-import { getAssetList } from "../../interfaces/Asset";
+import "../../../css/DashboardPage.css";
+import { columns, getAssetList } from "../../interfaces/Asset";
 import { useQuery } from "@tanstack/react-query";
 import { useMainRef, useScrollToMain } from "../../context/MainRefContext";
 import { useCheckLoggedIn } from "../../context/AuthContext";
+import Table from "../../components/Table";
 
 const AssetDashboardPage = () => {
   const mainRef = useMainRef();
@@ -16,12 +16,16 @@ const AssetDashboardPage = () => {
   });
 
   return (
-    <main className="ams-dashboard-page" ref={mainRef}>
+    <main className="dashboard-page" ref={mainRef}>
       <div className="title">Danh Sách Tài Sản</div>
       {isLoading || typeof assetList === "undefined" ? (
         <>Loading...</>
       ) : (
-        <AssetTable assetList={assetList} />
+        <Table
+          data={assetList}
+          columns={columns}
+          createLink="/asset-dashboard/create"
+        />
       )}
     </main>
   );

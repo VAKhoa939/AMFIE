@@ -1,7 +1,7 @@
 import { Table } from "@tanstack/react-table";
 import { BsFilterLeft, BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { useState } from "react";
-import "../../../css/FilterSidebar.css";
+import "../../css/FilterSidebar.css";
 
 interface FilterSidebarProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -24,10 +24,16 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
-                <Route path="/dashboard" element={<AssetDashboardPage />} />
-                <Route path="/dashboard/:id" element={<AssetInfoPage />} />
                 <Route
-                  path="/dashboard/create-asset"
+                  path="/asset-dashboard"
+                  element={<AssetDashboardPage />}
+                />
+                <Route
+                  path="/asset-dashboard/:id"
+                  element={<AssetInfoPage />}
+                />
+                <Route
+                  path="/asset-dashboard/create"
                   element={<CreateAssetPage />}
                 />
                 <Route path="/chat" element={<ChatPage />} />

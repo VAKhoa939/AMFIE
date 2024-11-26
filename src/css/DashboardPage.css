@@ -1,4 +1,4 @@
-.ams-dashboard-page {
+.dashboard-page {
   width: calc(100vw - 300px);
   height: calc(100vh);
   background-color: rgb(15, 17, 24);
@@ -6,7 +6,7 @@
   font-family: sans-serif;
 }
 
-.ams-dashboard-page .title {
+.dashboard-page .title {
   text-align: center;
   font-size: 50px;
   display: block;
@@ -25,7 +25,6 @@
   align-items: center;
   column-gap: 10px;
 }
-
 
 .ams-dashboard-page .icon {
   color: rgb(255, 255, 255);
