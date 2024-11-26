@@ -18,6 +18,7 @@ export interface Asset {
 
 export interface AssetResponse extends Asset {
   __v: string;
+  history: number;
 }
 
 const HANDLE_ASSET_URL = import.meta.env.VITE_API_URL + "/assets";
@@ -25,18 +26,16 @@ const HANDLE_ASSET_URL = import.meta.env.VITE_API_URL + "/assets";
 export async function getAssetList() {
   const res = await fetch(`${HANDLE_ASSET_URL}`);
   const data: AssetResponse[] = await res.json();
-  // Filter out the _id field from each asset
-  const filteredData = data.map(({ __v, ...rest }) => rest);
+  // Filter out non-used fields from each asset
+  const filteredData = data.map(({ __v, history, ...rest }) => rest);
   return [...filteredData];
 }
 
-export async function getAssetById(assetId: string) {
-  const res = await fetch(`${HANDLE_ASSET_URL}/${assetId}`);
+export async function getAssetById(id: string) {
+  const res = await fetch(`${HANDLE_ASSET_URL}/${id}`);
   const data = await res.json();
-  const resAsset = data.map(
-    ({ __v, ...rest }: { _id: string; __v: string; rest: Asset }) => rest
-  );
-  return resAsset[0];
+  console.log(data);
+  return data;
 }
 
 export async function createAsset(asset: Asset) {
@@ -49,13 +48,10 @@ export async function createAsset(asset: Asset) {
   };
   const res = await fetch(`${HANDLE_ASSET_URL}`, requestInit);
   const data = await res.json();
-  const resAsset = data.map(
-    ({ __v, ...rest }: { _id: string; __v: string; rest: Asset }) => rest
-  );
-  return resAsset[0];
+  return data;
 }
 
-export async function updateAsset(asset: Asset) {
+export async function updateAsset(id: string, asset: Asset) {
   const requestInit: RequestInit = {
     method: "PUT",
     headers: {
@@ -63,27 +59,22 @@ export async function updateAsset(asset: Asset) {
     },
     body: JSON.stringify(asset),
   };
-  const res = await fetch(`${HANDLE_ASSET_URL}/${asset.asset_id}`, requestInit);
+  const res = await fetch(`${HANDLE_ASSET_URL}/${id}`, requestInit);
   const data = await res.json();
-  const resAsset = data.map(
-    ({ __v, ...rest }: { _id: string; __v: string; rest: Asset }) => rest
-  );
-  return resAsset[0];
+  console.log(data);
+  return data;
 }
 
-export async function deleteAsset(asset_id: string) {
+export async function deleteAsset(id: string) {
   const requestInit: RequestInit = {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
   };
-  const res = await fetch(`${HANDLE_ASSET_URL}/${asset_id}`, requestInit);
+  const res = await fetch(`${HANDLE_ASSET_URL}/${id}`, requestInit);
   const data = await res.json();
-  const resAsset = data.map(
-    ({ __v, ...rest }: { _id: string; __v: string; rest: Asset }) => rest
-  );
-  return resAsset[0];
+  return data;
 }
 
 export const columnHeaderList: string[] = [

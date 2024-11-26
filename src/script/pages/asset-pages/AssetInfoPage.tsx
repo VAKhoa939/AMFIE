@@ -16,21 +16,16 @@ const AssetInfoPage = () => {
   const [formData, setFormData] = useState<Asset>(defaultAsset);
   const [mode, setMode] = useState<string>("info");
   const location = useLocation();
-  const isInfoMode = mode === "info";
   const id = location.pathname.split("/").pop() as string;
 
-  const { data: asset, isLoading } = useQuery(["asset"], {
-    queryFn: async () => {
-      return getAssetById(id);
-    },
-    enabled: isInfoMode,
+  const { data: asset, isLoading } = useQuery({
+    queryFn: async () => getAssetById(id),
+    queryKey: ["asset", id],
   });
 
   useEffect(() => {
-    if (!isInfoMode || !asset) return;
-    console.log(asset);
-    setFormData(asset);
-  }, [isInfoMode, asset, formData]);
+    if (asset) setFormData(asset);
+  }, [asset]);
 
   const navigate = useNavigate();
   const mainRef = useMainRef();
@@ -47,60 +42,69 @@ const AssetInfoPage = () => {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(
+    e:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
     e.preventDefault();
-    if (mode === "delete") {
-      deleteAsset(id);
-      navigate("/dashboard");
-      return;
-    }
-    if (mode === "update") {
-      updateAsset(formData);
-      setMode("info");
-    }
+    updateAsset(id, formData);
+    setMode("info");
   }
 
   function renderInfo() {
     return (
-      <>
-        <div className="content">
-          {Object.entries(formData).map(([key, value], id) => (
-            <div key={key}>
-              <p>{columnHeaderList[id]}:</p>
-              <p>{value}</p>
-            </div>
-          ))}
-        </div>
+      <div className="content">
+        {Object.entries(formData).map(
+          ([key, value], id) =>
+            key !== "__v" &&
+            key !== "history" && (
+              <div key={key}>
+                <p>{columnHeaderList[id]}:</p>
+                <p>{value || "Không có"}</p>
+              </div>
+            )
+        )}
+        <div />
         <button onClick={() => setMode("update")}>Cập nhật</button>
-        <button>Xóa tài sản</button>
-      </>
+        <button
+          onClick={() => {
+            deleteAsset(id);
+            navigate("/dashboard");
+          }}
+        >
+          Xóa tài sản
+        </button>
+      </div>
     );
   }
 
   function renderForm() {
     return (
       <form onSubmit={handleSubmit} className="content">
-        {Object.entries(formData).map(([key, value], id) => (
-          <div key={key}>
-            <p>{columnHeaderList[id]}:</p>
-            {key === "note" ? (
-              <textarea name={key} value={value} onChange={handleChange} />
-            ) : (
-              <input
-                type="text"
-                name={key}
-                value={value}
-                onChange={handleChange}
-                readOnly={key === "asset_id"}
-              />
-            )}
-          </div>
-        ))}
-
-        <div>
-          <input type="submit" value="Lưu" />
-          <button onClick={() => setMode("info")}>Trở về</button>
-        </div>
+        {Object.entries(formData).map(
+          ([key, value], id) =>
+            key !== "__v" &&
+            key !== "history" && (
+              <div key={key}>
+                <p>{columnHeaderList[id]}:</p>
+                {key === "note" ? (
+                  <textarea name={key} value={value} onChange={handleChange} />
+                ) : (
+                  <input
+                    type="text"
+                    name={key}
+                    value={value}
+                    onChange={handleChange}
+                    readOnly={key === "id"}
+                  />
+                )}
+              </div>
+            )
+        )}
+        <div></div>
+        <input type="submit" value="Lưu" />
+        <button onClick={() => setMode("info")}>Hủy</button>
       </form>
     );
   }
@@ -112,11 +116,7 @@ const AssetInfoPage = () => {
         {isLoading ? (
           <>Loading...</>
         ) : (
-          <div className="content">
-            {mode === "update" || mode === "create"
-              ? renderForm()
-              : renderInfo()}
-          </div>
+          <>{mode === "update" ? renderForm() : renderInfo()}</>
         )}
       </div>
     </main>
