@@ -118,23 +118,32 @@ export default function AssetTable({ assetList }: Props) {
     onSortingChange: setSorting,
     onGlobalFilterChange: setFiltering,
   });
-
-  return (
-    <div className="relative">
-      <FilterSidebar table={table} />
-      <div className="w3-container">
-        <div className="ams-table-buttons">
-          <input
+  const searchBar = ()=>{
+    return(
+      <input
             type="text"
             value={filtering}
             onChange={(e) => setFiltering(e.target.value)}
             placeholder="Search all columns..."
             className=""
           />
-          <Link to={"/dashboard/create-asset"} className="create-btn">
+    )
+  }
+  const create = ()=>{
+    return(
+      <Link to={"/dashboard/create-asset"} className="create-btn">
             <FaPlus className="icon" />
             <label>Tạo tài sản mới</label>
           </Link>
+    )
+  }
+  return (
+    <div className="relative">
+      <FilterSidebar table={table} />
+      <div className="w3-container">
+        <div className="ams-table-buttons">
+          {searchBar()}
+          {create()}
         </div>
         <table className="w3-table-all">
           <thead>
@@ -233,6 +242,6 @@ export default function AssetTable({ assetList }: Props) {
           </span>
         </div>
       </div>
-    </div>
+      </div>
   );
 }
