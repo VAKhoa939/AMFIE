@@ -1,15 +1,16 @@
 import ChatPage from "./pages/chat-page/ChatPage";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./pages/layout/Layout";
 import LoginPage from "./pages/auth-pages/LoginPage";
 import RegisterPage from "./pages/auth-pages/RegisterPage";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthContext, AuthProvider } from "./context/AuthContext";
 import HomePage from "./pages/home-page/HomePage";
 import AssetDashboardPage from "./pages/asset-pages/AssetDashboardPage";
 import { MainRefProvider } from "./context/MainRefContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AssetInfoPage from "./pages/asset-pages/AssetInfoPage";
 import CreateAssetPage from "./pages/asset-pages/CreateAssetPage";
+import React from "react";
 
 function App() {
   const queryClient = new QueryClient();
@@ -26,15 +27,15 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route
                   path="/asset-dashboard"
-                  element={<AssetDashboardPage />}
+                  element={<ProtectedRoute Component={AssetDashboardPage} />}
                 />
                 <Route
                   path="/asset-dashboard/:id"
-                  element={<AssetInfoPage />}
+                  element={<ProtectedRoute Component={AssetInfoPage} />}
                 />
                 <Route
                   path="/asset-dashboard/create"
-                  element={<CreateAssetPage />}
+                  element={<ProtectedRoute Component={CreateAssetPage} />}
                 />
                 <Route path="/chat" element={<ChatPage />} />
               </Routes>
@@ -45,5 +46,15 @@ function App() {
     </BrowserRouter>
   );
 }
+interface ProtectedRouteProps {
+  Component: React.FC;
+}
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ Component }) => {
+  const authContext = React.useContext(AuthContext);
+  if (!authContext) {
+    throw new Error("useContext must be used within an AuthProvider");
+  }
+  return authContext.user ? <Component /> : <Navigate to="/login" />;
+};
 
 export default App;

@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import { defaultUser, IUser } from "../../interfaces/User";
-import uteLogo from "../../../assets/general/ute-logo.png";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
 import "../../../css/AuthPages.css";
+import hcmuteLogo from "../../../assets/hcmute-logo.png";
+import { useNavigate } from "react-router-dom";
+import {
+  useAuth,
+  RegisterUser,
+  defaultRegisterUser,
+} from "../../context/AuthContext";
 import { useMainRef, useScrollToMain } from "../../context/MainRefContext";
 
 const RegisterPage = () => {
   const mainRef = useMainRef();
-  const [user, setUser] = useState<IUser>(defaultUser);
+  const [registerUser, setRegisterUser] =
+    useState<RegisterUser>(defaultRegisterUser);
   const [cPassword, setCPassword] = useState<string>("");
-  const { setIsLoggedIn } = useAuth();
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   useScrollToMain();
@@ -20,29 +24,32 @@ const RegisterPage = () => {
       setCPassword(event.target.value);
       return;
     }
-    setUser((prevUser) => ({
+    setRegisterUser((prevUser) => ({
       ...prevUser,
       [event.target.name]: event.target.value,
     }));
   }
 
-  function handleLogin() {
-    setIsLoggedIn(true);
-    navigate("/dashboard");
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    const success = await register(registerUser);
+    if (success) {
+      navigate("/asset-dashboard");
+    }
   }
 
   return (
     <main className="auth-page" ref={mainRef}>
       <div className="auth-section">
         <form method="post" className="auth-form">
-          <img className="ute-logo" src={uteLogo} />
+          <img className="ute-logo" src={hcmuteLogo} />
           <div className="input-area">
             <div className="input-container">
-              <p>Name</p>
+              <p>Tên tài khoản</p>
               <input
                 type="text"
                 name="name"
-                value={user.name}
+                value={registerUser.name}
                 onChange={(e) => onChangeInput(e)}
               />
             </div>
@@ -53,27 +60,27 @@ const RegisterPage = () => {
               <input
                 type="text"
                 name="email"
-                value={user.email}
+                value={registerUser.email}
                 onChange={(e) => onChangeInput(e)}
               />
             </div>
           </div>
           <div className="input-area">
             <div className="input-container">
-              <p>Password</p>
+              <p>Mật khẩu</p>
               <input
-                type="text"
+                type="password"
                 name="password"
-                value={user.password}
+                value={registerUser.password}
                 onChange={(e) => onChangeInput(e)}
               />
             </div>
           </div>
           <div className="input-area">
             <div className="input-container">
-              <p>Confirm Password</p>
+              <p>Nhập lại mật khẩu</p>
               <input
-                type="text"
+                type="password"
                 name="confirm-password"
                 value={cPassword}
                 onChange={(e) => onChangeInput(e)}

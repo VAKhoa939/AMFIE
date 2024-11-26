@@ -1,4 +1,4 @@
-import "../../css/DashboardPage.css";
+import "../../css/Table.css";
 import {
   useReactTable,
   getCoreRowModel,
@@ -23,10 +23,10 @@ interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[];
   columns: Columns[];
-  createLink: string;
+  baseURL: string;
 }
 
-const Table = ({ data, columns, createLink: dashboardLink }: Props) => {
+const Table = ({ data, columns, baseURL }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filtering, setFiltering] = useState("");
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
@@ -50,8 +50,8 @@ const Table = ({ data, columns, createLink: dashboardLink }: Props) => {
   return (
     <div className="relative">
       <FilterSidebar table={table} />
-      <div className="w3-container">
-        <div className="ams-table-buttons">
+      <div className="table-background">
+        <div className="table-buttons">
           <input
             type="text"
             value={filtering}
@@ -59,61 +59,81 @@ const Table = ({ data, columns, createLink: dashboardLink }: Props) => {
             placeholder="Search all columns..."
             className=""
           />
-          <Link to={dashboardLink} className="create-btn">
+          <Link to={baseURL} className="create-btn">
             <FaPlus className="icon" />
             <label>Tạo mới</label>
           </Link>
         </div>
-        <table className="w3-table-all">
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    onClick={header.column.getToggleSortingHandler()}
-                  >
-                    {header.isPlaceholder ? null : (
-                      <div>
-                        {" "}
+        <div className="table-container">
+          {" "}
+          <table>
+            <thead>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <th
+                      key={header.id}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      {header.isPlaceholder ? null : (
+                        <div>
+                          {" "}
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                          {
+                            <span className="inline-block w-4">
+                              {header.column.getCanSort()
+                                ? {
+                                    asc: <FaSortUp className="icon" />,
+                                    desc: <FaSortDown className="icon" />,
+                                    false: <FaSort className="icon" />, // Default state
+                                  }[
+                                    (header.column.getIsSorted() as string) ??
+                                      "false"
+                                  ]
+                                : null}
+                            </span>
+                          }
+                        </div>
+                      )}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody>
+              {table.getRowModel().rows.map((row) => (
+                <tr key={row.id}>
+                  {row.getVisibleCells().map((cell, index) => {
+                    if (index === 0)
+                      return (
+                        <Link to={`${baseURL}/${cell.getValue()}`}>
+                          <td key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </td>
+                        </Link>
+                      );
+                    return (
+                      <td key={cell.id}>
                         {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
+                          cell.column.columnDef.cell,
+                          cell.getContext()
                         )}
-                        {
-                          <span className="inline-block w-4">
-                            {header.column.getCanSort()
-                              ? {
-                                  asc: <FaSortUp className="icon" />,
-                                  desc: <FaSortDown className="icon" />,
-                                  false: <FaSort className="icon" />, // Default state
-                                }[
-                                  (header.column.getIsSorted() as string) ??
-                                    "false"
-                                ]
-                              : null}
-                          </span>
-                        }
-                      </div>
-                    )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-          <tfoot />
-        </table>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+            <tfoot />
+          </table>
+        </div>
+
         <div className="pagination">
           <button
             className="pagination-btn"

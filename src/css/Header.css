@@ -27,6 +27,7 @@ header {
   display: block;
   padding: 9px 16px;
   overflow: hidden;
+  align-items: center;
 }
 
 .nav-btn p,

@@ -8,7 +8,9 @@ interface Props {
 const Navbar = (props: Props) => {
   const location = useLocation();
   const showNavbar =
-    location.pathname !== "/" && location.pathname !== "/login";
+    location.pathname !== "/" &&
+    location.pathname !== "/login" &&
+    location.pathname !== "/register";
   return showNavbar ? (
     <div className="ams-body">
       <nav className="ams-navbar">Navbar</nav>

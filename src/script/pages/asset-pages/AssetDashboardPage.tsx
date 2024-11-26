@@ -1,13 +1,11 @@
 import "../../../css/DashboardPage.css";
-import { columns, getAssetList } from "../../interfaces/Asset";
+import { tableColumns, getAssetList } from "../../interfaces/Asset";
 import { useQuery } from "@tanstack/react-query";
 import { useMainRef, useScrollToMain } from "../../context/MainRefContext";
-import { useCheckLoggedIn } from "../../context/AuthContext";
 import Table from "../../components/Table";
 
 const AssetDashboardPage = () => {
   const mainRef = useMainRef();
-  useCheckLoggedIn();
   useScrollToMain();
 
   const { data: assetList, isLoading } = useQuery({
@@ -23,8 +21,8 @@ const AssetDashboardPage = () => {
       ) : (
         <Table
           data={assetList}
-          columns={columns}
-          createLink="/asset-dashboard/create"
+          columns={tableColumns}
+          baseURL="/asset-dashboard"
         />
       )}
     </main>

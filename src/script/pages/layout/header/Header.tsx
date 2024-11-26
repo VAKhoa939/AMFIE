@@ -1,6 +1,6 @@
 //import DropdownLanguage from "./DropdownLanguage";
 import "../../../../css/Header.css";
-import ute from "../../../../assets/header/ute.png";
+import uteFullName from "../../../../assets/uteFullName.png";
 import DropdownLogin from "./DropdownLogin";
 import { Link, useLocation } from "react-router-dom";
 
@@ -28,7 +28,7 @@ function Header() {
       {showUTEFullLogo && (
         <div className="logo-section">
           <a href="/">
-            <img className="ute-img" src={ute} />
+            <img className="ute-img" src={uteFullName} />
           </a>
         </div>
       )}

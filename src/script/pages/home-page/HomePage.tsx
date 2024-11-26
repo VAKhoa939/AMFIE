@@ -1,15 +1,10 @@
 import { Link } from "react-router-dom";
 import "../../../css/HomePage.css";
-import homepagebg from "../../../assets/home-page/homepagebg.png";
-import { useMainRef, useScrollToMain } from "../../context/MainRefContext";
+import homepagebg from "../../../assets/homepagebg.png";
 
 const HomePage = () => {
-  const mainRef = useMainRef();
-
-  useScrollToMain();
-
   return (
-    <main className="homepage" ref={mainRef}>
+    <main className="homepage">
       <div className="homepage-content">
         <h1>ĐẠI HỌC SƯ PHẠM KỸ THUẬT TP.HCM</h1>
         <h2>Phần Mềm Quản Lý Tài Sản, Thiết Bị, Dụng Cụ</h2>

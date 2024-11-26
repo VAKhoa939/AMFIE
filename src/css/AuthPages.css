@@ -14,7 +14,7 @@
 .auth-section {
   height: 100%;
   width: 100%;
-  position: relative;
+  padding: 30px 0;
 }
 
 .auth-form {
@@ -24,11 +24,8 @@
   border: 1px solid black;
   border-radius: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
-
-  position: absolute;
   inset: 0;
   margin: auto;
-
   display: flex;
   align-self: center;
   flex-direction: column;

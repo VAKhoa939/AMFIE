@@ -1,30 +1,32 @@
 import "../../../../css/Header.css";
-import userIcon from "../../../../assets/general/user-icon.png";
-//import logoutIcon from "../../../../assets/header/logout-icon.png";
+import { FaUserCircle } from "react-icons/fa";
 import { useAuth } from "../../../context/AuthContext";
 import { Link } from "react-router-dom";
 
 const DropdownLogin = () => {
-  const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const { logout, user } = useAuth();
 
   return (
     <>
-      {isLoggedIn ? (
+      {user ? (
         <div className="dropdown">
           <div className="dropdown-btn">
-            <img src={userIcon} />
-            <p>Email</p>
+            <FaUserCircle
+              style={{
+                backgroundColor: "white",
+                borderRadius: "50%",
+                borderWidth: "0",
+              }}
+              size={30}
+            />
+            <p>{user.email}</p>
           </div>
           <ul className="dropdown-menu">
             <li>
               <a href="#">Trang cá nhân</a>
             </li>
             <li>
-              <Link
-                to="/login"
-                className="logout-btn"
-                onClick={() => setIsLoggedIn(false)}
-              >
+              <Link to="/login" className="logout-btn" onClick={logout}>
                 <p>Đăng xuất</p>
               </Link>
             </li>

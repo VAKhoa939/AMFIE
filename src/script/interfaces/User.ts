@@ -10,47 +10,12 @@ export interface User {
   isActive?: boolean;
 }
 
-interface LoggedinUser {
-  message: string;
-  token: string;
-  user: User;
-}
-
 export function defaultUser(): User {
   return {
     name: "",
     email: "",
     password: "",
   };
-}
-
-export interface LoginUser {
-  email: string;
-  password: string;
-}
-
-export function defaultLoginUser(): LoginUser {
-  return {
-    email: "",
-    password: "",
-  };
-}
-
-const HANDLE_AUTH_URL = import.meta.env.VITE_API_URL + "/auth";
-
-export async function login(loginUser: LoginUser) {
-  const requestInit: RequestInit = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(loginUser),
-  };
-  const res = await fetch(`${HANDLE_AUTH_URL}/login`, requestInit);
-  const data = (await res.json()) as LoggedinUser;
-  localStorage.setItem("token", data.token);
-
-  return data.user;
 }
 
 const HANDLE_USER_URL = import.meta.env.VITE_API_URL + "/users";

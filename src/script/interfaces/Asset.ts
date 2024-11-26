@@ -1,22 +1,23 @@
 export interface Asset {
-  id: string;
-  asset_id: string;
+  assetId: string;
+  assetCode: string;
   name: string;
   specifications: string;
-  year_of_use: number;
+  yearOfUse: number;
   quantity: number;
-  unit_price: number;
-  origin_price: number;
-  real_count: number;
-  depreciation_rate: number;
-  remaining_value: number;
+  unitPrice: number;
+  originPrice: number;
+  realCount: number;
+  depreciationRate: number;
+  remainingValue: number;
   location: string;
-  responsible_user: string;
-  suggested_disposal: string;
+  responsibleUser: string;
+  suggestedDisposal: string;
   note: string;
 }
 
 export interface AssetResponse extends Asset {
+  _id: string;
   __v: string;
   history: number;
 }
@@ -24,16 +25,20 @@ export interface AssetResponse extends Asset {
 const HANDLE_ASSET_URL = import.meta.env.VITE_API_URL + "/assets";
 
 export async function getAssetList() {
-  const res = await fetch(`${HANDLE_ASSET_URL}`);
+  const res = await fetch(`${HANDLE_ASSET_URL}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+  });
   const data: AssetResponse[] = await res.json();
   // Filter out non-used fields from each asset
-  const filteredData = data.map(({ __v, history, ...rest }) => rest);
+  const filteredData = data.map(({ _id, __v, history, ...rest }) => rest);
 
   return [...filteredData];
 }
 
 export async function getAssetById(id: string) {
-  const res = await fetch(`${HANDLE_ASSET_URL}/${id}`);
+  const res = await fetch(`${HANDLE_ASSET_URL}/${id}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+  });
   const data = await res.json();
   console.log(data);
   return data;
@@ -44,6 +49,7 @@ export async function createAsset(asset: Asset) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(asset),
   };
@@ -57,6 +63,7 @@ export async function updateAsset(id: string, asset: Asset) {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(asset),
   };
@@ -71,6 +78,7 @@ export async function deleteAsset(id: string) {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   };
   const res = await fetch(`${HANDLE_ASSET_URL}/${id}`, requestInit);
@@ -97,32 +105,32 @@ export const columnHeaderList: string[] = [
 ];
 
 export const defaultAsset: Asset = {
-  id: "",
-  asset_id: "",
+  assetId: "",
+  assetCode: "",
   name: "",
   specifications: "",
-  year_of_use: 0,
+  yearOfUse: 0,
   quantity: 0,
-  unit_price: 0,
-  origin_price: 0,
-  real_count: 0,
-  depreciation_rate: 0,
-  remaining_value: 0,
+  unitPrice: 0,
+  originPrice: 0,
+  realCount: 0,
+  depreciationRate: 0,
+  remainingValue: 0,
   location: "",
-  responsible_user: "",
-  suggested_disposal: "",
+  responsibleUser: "",
+  suggestedDisposal: "",
   note: "",
 };
 
-export const columns = [
+export const tableColumns = [
   {
     header: "Mã tài sản",
-    accessorKey: "_id",
+    accessorKey: "asset_id",
     footer: "Mã tài sản",
   },
   {
     header: "Số hiệu tài sản",
-    accessorKey: "asset_id",
+    accessorKey: "asset_code",
     footer: "Số hiệu tài sản",
   },
   {
