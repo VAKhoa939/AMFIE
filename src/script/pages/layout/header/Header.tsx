@@ -17,7 +17,7 @@ function Header() {
           </Link>
         </li>
         <li className="nav-btn">
-          <Link to="/dashboard">
+          <Link to="/asset-dashboard">
             <p>Bảng điều khiển</p>
           </Link>
         </li>

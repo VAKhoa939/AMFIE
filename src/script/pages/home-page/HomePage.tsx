@@ -14,7 +14,7 @@ const HomePage = () => {
         <h1>ĐẠI HỌC SƯ PHẠM KỸ THUẬT TP.HCM</h1>
         <h2>Phần Mềm Quản Lý Tài Sản, Thiết Bị, Dụng Cụ</h2>
         <h2>Khoa Đào Tạo Quốc Tế</h2>
-        <Link to="/dashboard" className="go-to-dashboard-btn">
+        <Link to="/asset-dashboard" className="go-to-dashboard-btn">
           Đến bảng điều khiển
         </Link>
       </div>

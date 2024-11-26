@@ -6,17 +6,27 @@ import uteLogo from "../../../assets/general/ute-logo.png";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useMainRef, useScrollToMain } from "../../context/MainRefContext";
+import { useState } from "react";
+import { defaultLoginUser, login, LoginUser } from "../../interfaces/User";
 
 const LoginPage = () => {
   const mainRef = useMainRef();
   const { setIsLoggedIn } = useAuth();
   const navigate = useNavigate();
+  const [loginUser, setLoginUser] = useState<LoginUser>(defaultLoginUser());
 
   useScrollToMain();
 
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name } = e.target;
+    const value = e.target.value;
+    setLoginUser((prevState) => ({ ...prevState, [name]: value }));
+  }
+
   function handleLogin() {
+    console.log(login(loginUser));
     setIsLoggedIn(true);
-    navigate("/asset-dashboard");
+    //navigate("/asset-dashboard");
   }
 
   return (
@@ -31,14 +41,24 @@ const LoginPage = () => {
             <img className="email-icon" src={emailIcon} />
             <div className="input-container">
               <p>Email</p>
-              <input type="text" name="email" />
+              <input
+                type="text"
+                name="email"
+                value={loginUser.email}
+                onChange={handleChange}
+              />
             </div>
           </div>
           <div className="input-area login-form">
             <img className="password-icon" src={passwordIcon} />
             <div className="input-container">
               <p>Password</p>
-              <input type="password" name="password" />
+              <input
+                type="password"
+                name="password"
+                value={loginUser.password}
+                onChange={handleChange}
+              />
             </div>
           </div>
           <p>
