@@ -26,9 +26,6 @@
   column-gap: 10px;
 }
 
-.w3-table-all {
-  color: black;
-}
 
 .ams-dashboard-page .icon {
   color: rgb(255, 255, 255);
@@ -59,4 +56,12 @@
 
 .w3-container {
   padding: 0.01em 16px;
+  background-color: black;
+}
+.w3-table-all {
+  color: white;
+  background-color: black;
+}
+tbody {
+  background-color: black;
 }
